@@ -72,7 +72,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-24"
     >
       {/* Animated background elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" />
