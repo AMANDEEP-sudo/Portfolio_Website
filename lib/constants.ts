@@ -13,12 +13,12 @@ export const NAV_ITEMS = [
 ];
 
 export const HERO_CONTENT = {
-  greeting: 'Hi! my name is',
-  title: 'Amandeep.',
-  roleLine: "I'm a Fullstack Web Developer.",
-  emphasisLine: 'I create reliable software on the internet.',
+  greeting: '',
+  title: 'Amandeep Aman',
+  roleLine: "Fullstack Web Developer • B.Tech CSE",
+  emphasisLine: 'Building production-ready applications with clean code and best practices.',
   description:
-    'Backend-first engineer blending Java, Spring Boot, and Next.js to craft polished products with the same energy I bring to hackathons.',
+    'Passionate developer specializing in full-stack development with Java, Spring Boot, React, and Next.js. Experienced in designing scalable backend systems, crafting responsive frontends, and deploying cloud-first solutions. Strong foundation in Data Structures & Algorithms with proven problem-solving skills across 400+ LeetCode problems.',
   ctaPrimary: 'Projects',
   ctaSecondary: 'Resume',
   socialHint: 'find me on',

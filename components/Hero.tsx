@@ -89,11 +89,13 @@ export default function Hero() {
           {/* Left Content */}
           <div className="space-y-8">
             {/* Greeting */}
-            <MotionDiv variants={itemVariants}>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-200">
-                👋 {HERO_CONTENT.greeting}
-              </span>
-            </MotionDiv>
+            {HERO_CONTENT.greeting && (
+              <MotionDiv variants={itemVariants}>
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-200">
+                  👋 {HERO_CONTENT.greeting}
+                </span>
+              </MotionDiv>
+            )}
 
             {/* Main Heading */}
             <MotionDiv variants={itemVariants} className="space-y-4">
