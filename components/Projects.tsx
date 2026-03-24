@@ -52,18 +52,17 @@ export default function Projects() {
               variants={itemVariants}
               className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-[#120417] to-black/80 p-6"
             >
-              <div className="flex items-center justify-between text-xs uppercase tracking-[0.4em] text-gray-400">
-                <span>{project.status}</span>
-                <span className="text-[#a855f7]">-&gt;</span>
-              </div>
               <div className="mt-4 space-y-3">
                 <h3 className="text-2xl font-bold text-white">{project.title}</h3>
                 <p className="text-gray-300 text-sm">{project.description}</p>
               </div>
 
-              <div className="my-6 h-44 rounded-2xl border border-white/10 bg-gradient-to-br from-[#3a0c59] via-[#1a032a] to-black flex items-center justify-center text-xs uppercase tracking-[0.5em] text-white/50">
-                preview
-              </div>
+              <div
+                className="my-6 h-44 rounded-2xl border border-white/10 flex items-center justify-center text-xs uppercase tracking-[0.5em] text-white/50"
+                style={{
+                  background: project.image || 'linear-gradient(135deg, #3a0c59, #1a032a)',
+                }}
+              />
 
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((tech) => (

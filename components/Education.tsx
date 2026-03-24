@@ -52,7 +52,7 @@ export default function Education() {
   };
 
   return (
-    <section className="section-padding relative">
+    <section id="education" className="section-padding relative">
       <div className="container-custom">
         <MotionDiv
           variants={containerVariants}

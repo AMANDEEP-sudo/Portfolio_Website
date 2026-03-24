@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Projects from '@/components/Projects';
 import TechStack from '@/components/TechStack';
+import Education from '@/components/Education';
 import Certifications from '@/components/Certifications';
 import Contact from '@/components/Contact';
 import ParticlesBackground from '@/components/ParticlesBackground';
@@ -32,6 +33,7 @@ export default function Home() {
         </div>
       </section>
       <TechStack />
+      <Education />
       <Certifications />
       <Projects />
       <Contact />

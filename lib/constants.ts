@@ -6,6 +6,7 @@ export const NAV_ITEMS = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
+  { name: 'Education', href: '#education' },
   { name: 'Certifications', href: '#certifications' },
   { name: 'Projects', href: '#projects' },
   { name: 'Contact', href: '#contact' },
@@ -68,7 +69,7 @@ export const FEATURED_PROJECTS = [
     ],
     tech: ['React', 'AI/ML', 'Web Audio API', 'Next.js'],
     repo: 'https://github.com/AMANDEEP-sudo/ai-karaoke-app',
-    status: 'Live',
+    image: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   },
   {
     id: 'theft-protection-tool',
@@ -82,9 +83,8 @@ export const FEATURED_PROJECTS = [
       'Secure evidence storage',
     ],
     tech: ['Python', 'Windows API', 'Security'],
-    demo: 'https://github.com/AMANDEEP-sudo/Theft_Protection_Tool',
     repo: 'https://github.com/AMANDEEP-sudo/Theft_Protection_Tool',
-    status: 'Live',
+    image: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
   },
   {
     id: 'password-manager',
@@ -98,9 +98,8 @@ export const FEATURED_PROJECTS = [
       'Offline backup support',
     ],
     tech: ['Java', 'Security', 'Swing'],
-    demo: 'https://github.com/AMANDEEP-sudo/Password_Manager',
     repo: 'https://github.com/AMANDEEP-sudo/Password_Manager',
-    status: 'Live',
+    image: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
   },
   {
     id: 'daily-task-organizer',
@@ -114,9 +113,8 @@ export const FEATURED_PROJECTS = [
       'Persistent data storage',
     ],
     tech: ['PHP', 'HTML/CSS', 'Database'],
-    demo: 'https://github.com/AMANDEEP-sudo/Daily_Task_Organiser',
     repo: 'https://github.com/AMANDEEP-sudo/Daily_Task_Organiser',
-    status: 'Live',
+    image: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
   },
 ];
 
@@ -234,6 +232,7 @@ export const CONTACT_CTA = {
 export const FOOTER_LINKS = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
+  { name: 'Education', href: '#education' },
   { name: 'Certifications', href: '#certifications' },
   { name: 'Projects', href: '#projects' },
   { name: 'Contact', href: '#contact' },
