@@ -24,10 +24,15 @@ export async function GET() {
     }
 
     const username = process.env.GITHUB_USERNAME || 'AMANDEEP-sudo';
-    const token = process.env.GITHUB_TOKEN;
+    const token =
+      process.env.GITHUB_TOKEN || process.env.GITHUB_PAT || process.env.GH_TOKEN || null;
 
     if (!token) {
-      throw new Error('GITHUB_TOKEN environment variable is not set');
+      console.error('GitHub token missing. Check GITHUB_TOKEN/GITHUB_PAT/GH_TOKEN in environment.');
+      return NextResponse.json(
+        { error: 'GITHUB token missing on server. Set GITHUB_TOKEN.' },
+        { status: 401 }
+      );
     }
 
     // Fetch user data from GitHub API
@@ -41,7 +46,12 @@ export async function GET() {
     });
 
     if (!userResponse.ok) {
-      throw new Error(`GitHub API error: ${userResponse.statusText}`);
+      const msg = await userResponse.text().catch(() => userResponse.statusText);
+      console.error('GitHub REST API error', userResponse.status, msg);
+      return NextResponse.json(
+        { error: `GitHub REST API error: ${userResponse.status} ${userResponse.statusText}` },
+        { status: userResponse.status }
+      );
     }
 
     const userData = await userResponse.json();
@@ -79,10 +89,13 @@ export async function GET() {
       cache: 'no-store',
     });
 
-    let totalContributions = 205; // Fallback
+    let totalContributions = 0;
     
     if (graphqlResponse.ok) {
       const graphqlData = await graphqlResponse.json();
+      if (graphqlData.errors) {
+        console.error('GitHub GraphQL returned errors:', graphqlData.errors);
+      }
       if (
         graphqlData.data?.user?.contributionsCollection?.contributionCalendar
           ?.totalContributions
@@ -91,6 +104,13 @@ export async function GET() {
           graphqlData.data.user.contributionsCollection.contributionCalendar
             .totalContributions;
       }
+    } else {
+      const text = await graphqlResponse.text().catch(() => graphqlResponse.statusText);
+      console.error('GitHub GraphQL error', graphqlResponse.status, text);
+      return NextResponse.json(
+        { error: `GitHub GraphQL error: ${graphqlResponse.status}` },
+        { status: graphqlResponse.status }
+      );
     }
 
     const stats: GitHubStats = {
@@ -118,21 +138,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error('GitHub API Error:', error);
-
-    // Return fallback data if API fails
     return NextResponse.json(
-      {
-        username: 'AMANDEEP-sudo',
-        totalContributions: 205,
-        currentStreak: 12,
-        longestStreak: 45,
-        averageContributions: 4,
-        repositories: 15,
-        followers: 4,
-        following: 10,
-        joinDate: '2024-10-01T00:00:00Z',
-      },
-      { status: 200 } // Return 200 with fallback data
+      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
     );
   }
 }

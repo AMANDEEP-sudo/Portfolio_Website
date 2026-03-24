@@ -24,10 +24,15 @@ export async function GET() {
     }
 
     const username = process.env.GITHUB_USERNAME || 'AMANDEEP-sudo';
-    const token = process.env.GITHUB_TOKEN;
+    const token =
+      process.env.GITHUB_TOKEN || process.env.GITHUB_PAT || process.env.GH_TOKEN || null;
 
     if (!token) {
-      throw new Error('GITHUB_TOKEN environment variable is not set');
+      console.error('GitHub token missing. Check GITHUB_TOKEN/GITHUB_PAT/GH_TOKEN in environment.');
+      return NextResponse.json(
+        { success: false, error: 'GITHUB token missing on server. Set GITHUB_TOKEN.' },
+        { status: 401 }
+      );
     }
 
     // GraphQL query for contribution calendar
@@ -65,16 +70,21 @@ export async function GET() {
     });
 
     if (!response.ok) {
-      throw new Error(
-        `GitHub GraphQL API error: ${response.statusText}`,
+      const text = await response.text().catch(() => response.statusText);
+      console.error('GitHub GraphQL API error', response.status, text);
+      return NextResponse.json(
+        { success: false, error: `GitHub GraphQL API error: ${response.status}` },
+        { status: response.status }
       );
     }
 
     const result = await response.json();
 
     if (result.errors) {
-      throw new Error(
-        `GraphQL Error: ${result.errors.map((e: any) => e.message).join(', ')}`,
+      console.error('GitHub GraphQL returned errors:', result.errors);
+      return NextResponse.json(
+        { success: false, error: `GraphQL errors: ${result.errors.map((e: any) => e.message).join(', ')}` },
+        { status: 502 }
       );
     }
 
