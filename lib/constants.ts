@@ -56,19 +56,18 @@ export const TECH_STACK = [
 
 export const FEATURED_PROJECTS = [
   {
-    id: 'employee-efficiency-analyzer',
-    title: 'Employee Efficiency Analyzer',
+    id: 'ai-karaoke-app',
+    title: 'AI-Karaoke App',
     description:
-      'Government employee tracking system with performance analytics, task management, and comprehensive reporting dashboards.',
+      'Interactive karaoke application powered by AI, featuring real-time voice recognition, song matching, and scoring system.',
     highlights: [
-      'Smart ID generation and role-based access',
-      'Real-time efficiency score calculation',
-      'CSV export for payroll integration',
-      'GUI dashboard with live filtering',
+      'Real-time AI voice recognition',
+      'Automatic song detection and matching',
+      'Scoring based on pitch and timing accuracy',
+      'Interactive web-based interface',
     ],
-    tech: ['C++', 'Python', 'Database', 'Analytics'],
-    demo: 'https://github.com/AMANDEEP-sudo/Employee_Efficiency_Analyzer',
-    repo: 'https://github.com/AMANDEEP-sudo/Employee_Efficiency_Analyzer',
+    tech: ['React', 'AI/ML', 'Web Audio API', 'Next.js'],
+    repo: 'https://github.com/AMANDEEP-sudo/ai-karaoke-app',
     status: 'Live',
   },
   {
@@ -216,13 +215,13 @@ export const CERTIFICATIONS = [
 
 export const CONTACT_INFO = [
   { icon: 'Mail', label: 'Email', value: 'aman.deepaman3086@gmail.com', href: 'mailto:aman.deepaman3086@gmail.com' },
-  { icon: 'Phone', label: 'Phone', value: '+91-XXXXXXXXXX', href: 'tel:+910000000000' },
+  { icon: 'Phone', label: 'Phone', value: '+91 9113468393', href: 'tel:+919113468393' },
   { icon: 'MapPin', label: 'Location', value: 'Punjab, India', href: 'https://maps.app.goo.gl/' },
 ];
 
 export const SOCIAL_LINKS = [
   { name: 'GitHub', url: 'https://github.com/AMANDEEP-sudo' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/amandeep-aman' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/amandeep-aman/' },
   { name: 'Email', url: 'mailto:aman.deepaman3086@gmail.com' },
 ];
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Code2, ExternalLink, Github } from 'lucide-react';
+import { Code2, Github } from 'lucide-react';
 import { FEATURED_PROJECTS } from '@/lib/constants';
 import { MotionDiv, MotionA } from '@/lib/motion';
 
@@ -82,16 +82,7 @@ export default function Projects() {
                 ))}
               </div>
 
-              <div className="mt-6 flex items-center gap-4">
-                <MotionA
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-[#a855f7]"
-                  whileHover={{ x: 4 }}
-                >
-                  <ExternalLink size={16} /> Demo
-                </MotionA>
+              <div className="mt-6">
                 <MotionA
                   href={project.repo}
                   target="_blank"
