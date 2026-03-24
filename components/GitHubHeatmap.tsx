@@ -22,11 +22,49 @@ interface GitHubStats {
   currentStreak: number;
 }
 
+const FALLBACK_STATS: GitHubStats = {
+  totalContributions: 205,
+  longestStreak: 45,
+  currentStreak: 12,
+};
+
+function getFallbackColor(count: number) {
+  if (count === 0) return '#161b22';
+  if (count < 3) return '#0e4429';
+  if (count < 6) return '#006d32';
+  if (count < 9) return '#26a641';
+  return '#39d353';
+}
+
+function generateFallbackContributions(): ContributionDay[] {
+  const today = new Date();
+  const fallback: ContributionDay[] = [];
+
+  for (let offset = 0; offset < 365; offset += 1) {
+    const day = new Date(today);
+    day.setDate(day.getDate() - offset);
+
+    const seasonalPulse = Math.sin((2 * Math.PI * offset) / 52);
+    const base = 6 + seasonalPulse * 4;
+    const weekendBoost = day.getDay() === 6 || day.getDay() === 0 ? 2 : 0;
+    const count = Math.max(0, Math.round(base + weekendBoost));
+
+    fallback.push({
+      date: day.toISOString().split('T')[0],
+      count,
+      color: getFallbackColor(count),
+    });
+  }
+
+  return fallback.reverse();
+}
+
 export default function GitHubHeatmap() {
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [stats, setStats] = useState<GitHubStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const fetchGitHubCalendar = async () => {
@@ -47,32 +85,14 @@ export default function GitHubHeatmap() {
 
         const statsData = await statsRes.json();
         setStats(statsData);
-
+        setUsingFallback(false);
         setError(null);
       } catch (err) {
         console.error('Error fetching GitHub data:', err);
-
-        // Fallback: generate a local dummy dataset so the UI remains populated
-        const generateDummy = () => {
-          const end = new Date();
-          const start = new Date();
-          start.setFullYear(start.getFullYear() - 1);
-          const out: ContributionDay[] = [];
-          const cur = new Date(start);
-          while (cur <= end) {
-            const iso = cur.toISOString().split('T')[0];
-            // Simple pattern: more contributions on weekdays
-            const day = cur.getDay();
-            const base = day === 0 || day === 6 ? 0 : Math.floor(Math.random() * 3);
-            out.push({ date: iso, count: base, color: base > 0 ? '#7ee787' : '#ebedf0' });
-            cur.setDate(cur.getDate() + 1);
-          }
-          return out;
-        };
-
-        setContributions(generateDummy());
-        setStats({ totalContributions: 0, longestStreak: 0, currentStreak: 0 });
-        setError(null);
+        setContributions(generateFallbackContributions());
+        setStats(FALLBACK_STATS);
+        setUsingFallback(true);
+        setError('Live GitHub data is temporarily unavailable. Showing sample activity.');
       } finally {
         setLoading(false);
       }
@@ -85,15 +105,6 @@ export default function GitHubHeatmap() {
     return (
       <div className="flex justify-center items-center py-8 h-40">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
-        <p className="font-semibold">Error loading GitHub calendar</p>
-        <p className="text-xs opacity-75">{error}</p>
       </div>
     );
   }
@@ -121,6 +132,13 @@ export default function GitHubHeatmap() {
 
   return (
     <div className="w-full space-y-4">
+      {error && (
+        <div className="p-4 bg-amber-500/10 border border-amber-500/40 rounded-lg text-amber-200 text-sm">
+          <p className="font-semibold">{usingFallback ? 'Showing sample GitHub activity' : 'GitHub data warning'}</p>
+          <p className="text-xs opacity-80">{error}</p>
+        </div>
+      )}
+
       {/* Stats Summary */}
       {stats && (
         <div className="grid grid-cols-3 gap-3 md:gap-4">
